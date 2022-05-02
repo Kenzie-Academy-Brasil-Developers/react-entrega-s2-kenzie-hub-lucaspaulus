@@ -4,52 +4,52 @@ import {Switch, Route} from "react-router-dom"
 import Login from '../pages/Login'
 import Signup from '../pages/Signup'
 import Dashboard from '../pages/Dashboard'
-import { useHistory } from 'react-router-dom'
+
+import { Redirect } from 'react-router-dom'
 
 function Router(){
     const [auth, setAuth] = useState(false)
-    const history = useHistory()
+    const userInfo = JSON.parse(localStorage.getItem("@KenzieHub-m3:user")) 
+    
+    console.log("dir: routes", auth)
 
-    const [courseModule, setCourseModule] = useState()
-    console.log(auth)
     useEffect(()=>{
-        const token = window.localStorage.getItem("authToken")
-
-        if(!token){
-            setAuth(false)
+        const token = JSON.parse(localStorage.getItem("@KenzieHub-m3:token"))
+       
+        if(token){
+            setAuth(true)
+            
         }
-
-    },[history, auth])
-
-    if(!auth){
-        return(
-            <Switch>
-                <Route exact path="/">
-                    <Login setAuth={setAuth} setCourseModule={setCourseModule}/>
-                </Route>
-
-                <Route path="/signup">
-                    <Signup setAuth={setAuth} setCourseModule={setCourseModule}/>
-                </Route>
-    
-    
-            </Switch>
-        )
-    }
+    }, [auth])
 
     return(
         <Switch>
+               
                <Route exact path="/">
-                    <Login setAuth={setAuth} setCourseModule={setCourseModule}/>
+                    <Login auth={auth} setAuth={setAuth} userInfo={userInfo} />
                 </Route>
 
                 <Route path="/signup">
-                    <Signup setAuth={setAuth} setCourseModule={setCourseModule}/>
+                    <Signup auth={auth} setAuth={setAuth} userInfo={userInfo} />
                 </Route>
+
+                {auth
+                    ?
+                    <Route path="/dashboard/:userNameUrl" >
+                        <Dashboard  userInfo={userInfo} 
+                        auth={auth} setAuth={setAuth}>
+                         
+                        </Dashboard>
+                    </Route>
+                    :
+                    <Route path="/dashboard/" >
+                        <Dashboard  userInfo={userInfo} auth={auth} setAuth={setAuth} />
+                    </Route>  
+
+            
+            }
                 
-            <Route exact path="/dashboard/:name" >
-                <Dashboard courseModule={courseModule} />
-            </Route>
+                
         </Switch>
        
     )

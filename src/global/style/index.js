@@ -90,7 +90,6 @@ const GlobalStyle = createGlobalStyle`
         --Grey2: #343B41;
         --Grey1: #868E96;
         --Grey0: #F8F9FA;
-
         /* Feedback Palette */
         --Sucess: #3FE864;
         --Negative: #E83F5B

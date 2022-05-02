@@ -16,9 +16,11 @@ export const Button = styled.button`
     
     };
 
+
+
     border: 1.2182px solid transparent ;
     color: ${(props)=> !props.color ? " #F8F9FA" : "#ffffff"};
-
+    transition: 0.3s;
 
     &:hover{
         background-color: ${(props)=> 
@@ -35,7 +37,7 @@ export const Button = styled.button`
         
         };
 
-       
+        
     }
 
     

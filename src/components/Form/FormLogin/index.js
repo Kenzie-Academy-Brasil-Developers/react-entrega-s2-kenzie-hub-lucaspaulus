@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
+import api  from '../../../services/api/index.js'
 
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
@@ -13,12 +13,12 @@ import {FaEye} from "react-icons/fa"
 import {FaEyeSlash} from "react-icons/fa"
 
 import { Link } from 'react-router-dom'
-import handleNav from '../../../utils/handleNav.js'
 import toggleEye from "../../../utils/toggleEye.js"
-import { unstable_renderSubtreeIntoContainer } from 'react-dom'
+import { Redirect } from 'react-router-dom'
 
-function FormLogin({setAuth, setCourseModule}) {
+function FormLogin({auth , setAuth, userInfo, setCourseModule}) {
     const history = useHistory()
+    const [userName, setUserName] = useState("")
     const [eye, setEye] = useState(<FaEye/>)
     
     const formSchema = yup.object().shape({
@@ -32,28 +32,26 @@ function FormLogin({setAuth, setCourseModule}) {
     })
 
     function onSubmitFunc(data){
-
-        axios
-        .post("https://kenziehub.herokuapp.com/sessions", data)
+        api.post("/sessions", data)
         .then((response)=>{
+            const { token, user } = response.data
+            localStorage.setItem("@KenzieHub-m3:token", JSON.stringify(token))
+            localStorage.setItem("@KenzieHub-m3:user" , JSON.stringify(user))
             
-            //window.localStorage.clear()
-            window.localStorage.setItem("authToken", response.data.token)
-
             setAuth(true)
-            handleNav(history,`/dashboard/${response.data.user.name}`)
-           
-            setTimeout(()=> setCourseModule(response.data.user.course_module), 100)
-         
-        })
+            history.push(`/dashboard/${user.name}`)
 
-        .catch((err)=>console.log(err.response.data))
-        
+        })
+        .catch((err)=> console.log(err))
+
     }
 
-
+    if(auth){
+        return <Redirect to={`/dashboard/${userInfo.name}`}/>
+    }
+   
     console.log(errors)
-    
+    console.log("dir: login", auth)
     return (
         <S.Form onSubmit={handleSubmit(onSubmitFunc)}>      
             <header>
@@ -77,7 +75,7 @@ function FormLogin({setAuth, setCourseModule}) {
 
             <Button type="submit" color="color-primary">Entrar</Button>
             <Link to="/signup">Ainda não possui uma conta?</Link>
-            <Button onClick={()=> handleNav(history, "/signup")} color="grey1">Cadastra-se</Button>
+            <Button onClick={()=> history.push("/signup")} color="grey1">Cadastra-se</Button>
             
         </S.Form>
     )

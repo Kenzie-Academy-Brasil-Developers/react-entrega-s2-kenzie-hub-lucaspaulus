@@ -4,7 +4,7 @@ import * as S from "./style.js"
 import FormLogin from "../../components/Form/FormLogin"
 import kenzieHubLogo from "../../assets/kenzieHubLogo.svg"
 
-function Login({setAuth, setCourseModule}) {
+function Login({auth, setAuth, userInfo, setCourseModule}) {
     return (
         <S.Container>
             <S.Header>
@@ -12,7 +12,8 @@ function Login({setAuth, setCourseModule}) {
             </S.Header>
             
             <S.Content>
-                <FormLogin setAuth={setAuth} setCourseModule={setCourseModule}/>
+                <FormLogin auth={auth} setAuth={setAuth} 
+                userInfo={userInfo} setCourseModule={setCourseModule}/>
             </S.Content>
         </S.Container>
     )
