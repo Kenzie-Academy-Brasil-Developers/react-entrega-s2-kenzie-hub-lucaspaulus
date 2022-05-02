@@ -16,11 +16,11 @@ import { Link } from 'react-router-dom'
 import toggleEye from "../../../utils/toggleEye.js"
 import { Redirect } from 'react-router-dom'
 
-function FormLogin({auth , setAuth, userInfo, setCourseModule}) {
+function FormLogin({auth , setAuth, userInfo}) {
     const history = useHistory()
     const [userName, setUserName] = useState("")
     const [eye, setEye] = useState(<FaEye/>)
-    
+
     const formSchema = yup.object().shape({
         email: yup.string().email("Email inválido").required("Email é obrigatório"),
         password: yup.string().required("Senha é obrigatório").min(6, "Mínimo 6 digitos!")
