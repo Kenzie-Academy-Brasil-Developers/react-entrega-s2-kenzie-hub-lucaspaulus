@@ -134,7 +134,7 @@ display: flex;
     .wrapper{
         min-height: 0;
         max-height: 100%;
-         
+      
         
     }
     

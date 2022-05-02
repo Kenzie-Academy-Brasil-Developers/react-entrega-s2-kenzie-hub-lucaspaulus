@@ -11,23 +11,30 @@ import { Button } from '../../components/Button/style.js';
 
 import api from '../../services/api/index.js';
 import ModalAddTech from '../../components/Modal/ModalAddTech/index.js';
+import ModalEditTech from '../../components/Modal/ModalEditTech/index.js';
 import Card from '../../components/Card/index.js';
 
 function Dashboard({ userInfo, auth, setAuth}) {
     const param = useParams()
-    const userId = JSON.parse(localStorage.getItem("@KenzieHub-m3:user"))
-
+    const [userId] = useState(JSON.parse(localStorage.getItem("@KenzieHub-m3:user")))
+    console.log(userId.id)
     const [showModal, setShowModal] = useState("")
+    const [showModalEdit, setShoModalEdit] = useState("")
+    
  
 
     const [btnColor, setBtnColor] = useState("")
     const [iconColor, setIcontColor] = useState("")
-    
+    const [tech, setTech] = useState([])
+
     useEffect(()=>{
-        api.get(`/users/b16317d3-2912-4c14-80bc-3484c3b7d510`)
-        .then((response)=> setTech(response.data.techs))
-    },[])
-    const [tech, setTech] = useState()
+        api.get(`users/${userId.id}`)
+        .then((response)=> response.data)
+        .then((data)=>{
+            setTech(data.techs)
+        })
+    },)
+    
 
     
     if(!auth){
@@ -50,7 +57,7 @@ function Dashboard({ userInfo, auth, setAuth}) {
     }
 
 
-    console.log(userId)
+ 
 
    
 
@@ -58,6 +65,7 @@ function Dashboard({ userInfo, auth, setAuth}) {
         <S.Container>
 
             <ModalAddTech showModal={showModal} setShowModal={setShowModal}/>
+            <ModalEditTech tech={tech} showModalEdit={showModalEdit} setShoModalEdit={setShoModalEdit} ></ModalEditTech>
             <S.Navbar>
           
                 <div>
@@ -90,14 +98,13 @@ function Dashboard({ userInfo, auth, setAuth}) {
 
                 <S.Main__Body>
                     <div className='wrapper'>
-                            {tech && tech.map((tech)=>(
-                                <Card key={tech.id} techTitle={tech.title} techStatus={tech.status}></Card>
+                        {
+                            tech && tech.map((tech)=>(
+                                <Card onClick={()=> {setShoModalEdit("on")}} key={tech.id} techTitle={tech.title} techStatus={tech.status}></Card>
+                         
+                            )
 
-                            ) 
-
-                            )}
-                            
-                           
+                        )}    
                     </div>
 
                 </S.Main__Body>

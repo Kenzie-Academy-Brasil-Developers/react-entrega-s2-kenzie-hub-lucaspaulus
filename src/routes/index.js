@@ -32,7 +32,7 @@ function Router(){
                 <Route path="/signup">
                     <Signup auth={auth} setAuth={setAuth} userInfo={userInfo} />
                 </Route>
-
+                
                 {auth
                     ?
                     <Route path="/dashboard/:userNameUrl" >
