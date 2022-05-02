@@ -39,11 +39,8 @@ function FormSignup({auth, setAuth, userInfo, setCourseModule}) {
         .then(()=>{
             history.push("/")
         })
-        .catch((err)=> console.log(err))
     
     }
-
-    console.log(errors)
 
     if(auth){
         return <Redirect to={`/dashboard/${userInfo.name}`}/>

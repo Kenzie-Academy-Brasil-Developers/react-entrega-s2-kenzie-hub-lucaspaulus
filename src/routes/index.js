@@ -10,8 +10,6 @@ import { Redirect } from 'react-router-dom'
 function Router(){
     const [auth, setAuth] = useState(false)
     const userInfo = JSON.parse(localStorage.getItem("@KenzieHub-m3:user")) 
-    
-    console.log("dir: routes", auth)
 
     useEffect(()=>{
         const token = JSON.parse(localStorage.getItem("@KenzieHub-m3:token"))

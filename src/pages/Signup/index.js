@@ -7,7 +7,7 @@ import Button from "../../components/Button/"
 import FormSignup from '../../components/Form/FormSignup/index.js';
 
 
-function Signup({auth, setAuth, userInfo, setCourseModule}) {
+function Signup({auth, setAuth, userInfo}) {
     const history = useHistory()
 
     return (
@@ -18,7 +18,7 @@ function Signup({auth, setAuth, userInfo, setCourseModule}) {
             </S.Header>
             
             <S.Content>
-                <FormSignup auth={auth} setAuth={setAuth} userInfo={userInfo} setCourseModule={setCourseModule}/>
+                <FormSignup auth={auth} setAuth={setAuth} userInfo={userInfo}/>
             </S.Content>
             
             

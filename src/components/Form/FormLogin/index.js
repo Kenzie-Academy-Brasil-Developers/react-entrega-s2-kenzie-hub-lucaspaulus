@@ -42,16 +42,14 @@ function FormLogin({auth , setAuth, userInfo, setCourseModule}) {
             history.push(`/dashboard/${user.name}`)
 
         })
-        .catch((err)=> console.log(err))
+
 
     }
 
     if(auth){
         return <Redirect to={`/dashboard/${userInfo.name}`}/>
     }
-   
-    console.log(errors)
-    console.log("dir: login", auth)
+
     return (
         <S.Form onSubmit={handleSubmit(onSubmitFunc)}>      
             <header>

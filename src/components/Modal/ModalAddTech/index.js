@@ -12,7 +12,7 @@ function ModalAddTech({showModal, setShowModal}) {
  
     const token = JSON.parse(localStorage.getItem("@KenzieHub-m3:token"))
    
-    console.log(token)
+ 
     const formSchema = yup.object().shape({
         title: yup.string().required(),
         status: yup.string().required()
@@ -30,14 +30,7 @@ function ModalAddTech({showModal, setShowModal}) {
                 Authorization: `Bearer ${token}`
             }
 
-        })
-        
-        .then((response)=>{
-             console.log(response.data)
-             
-        })
-        .catch((err)=> console.log(err))
-    
+        })   
     }
     return (
         <S.Container showModal={showModal}>

@@ -17,15 +17,16 @@ import Card from '../../components/Card/index.js';
 function Dashboard({ userInfo, auth, setAuth}) {
     const param = useParams()
     const [userId] = useState(JSON.parse(localStorage.getItem("@KenzieHub-m3:user")))
-    console.log(userId.id)
+    
     const [showModal, setShowModal] = useState("")
-    const [showModalEdit, setShoModalEdit] = useState("")
+    const [showModalEdit, setShowModalEdit] = useState("")
     
  
 
     const [btnColor, setBtnColor] = useState("")
     const [iconColor, setIcontColor] = useState("")
     const [tech, setTech] = useState([])
+    const [item, setItem] = useState([])
 
     useEffect(()=>{
         api.get(`users/${userId.id}`)
@@ -33,7 +34,7 @@ function Dashboard({ userInfo, auth, setAuth}) {
         .then((data)=>{
             setTech(data.techs)
         })
-    },)
+    },[tech,item])
     
 
     
@@ -56,16 +57,13 @@ function Dashboard({ userInfo, auth, setAuth}) {
 
     }
 
-
- 
-
-   
-
     return (
         <S.Container>
 
             <ModalAddTech showModal={showModal} setShowModal={setShowModal}/>
-            <ModalEditTech tech={tech} showModalEdit={showModalEdit} setShoModalEdit={setShoModalEdit} ></ModalEditTech>
+            <ModalEditTech techTitle={item.title} id={item.id} showModalEdit={showModalEdit} 
+            setShowModalEdit={setShowModalEdit}></ModalEditTech>
+
             <S.Navbar>
           
                 <div>
@@ -99,9 +97,12 @@ function Dashboard({ userInfo, auth, setAuth}) {
                 <S.Main__Body>
                     <div className='wrapper'>
                         {
-                            tech && tech.map((tech)=>(
-                                <Card onClick={()=> {setShoModalEdit("on")}} key={tech.id} techTitle={tech.title} techStatus={tech.status}></Card>
-                         
+                            tech && tech.map((tech, index)=>(
+                                <>
+                                    <Card key={index} onClick={()=> {setShowModalEdit("on"); setItem(tech)} }  techTitle={tech.title} techStatus={tech.status} ></Card>
+                                    
+                                </>
+                               
                             )
 
                         )}    
