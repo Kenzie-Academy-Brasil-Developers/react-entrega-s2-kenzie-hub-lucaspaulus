@@ -57,13 +57,13 @@ function FormLogin({auth , setAuth, userInfo, setCourseModule}) {
             </header>
 
             <label>Email</label>
-            <input value="LIFEISGOOD@gmail.com" className={errors.email ? "msgErrorColor" : ""} 
+            <input  className={errors.email ? "msgErrorColor" : ""} 
             placeholder="Digite aqui seu Email" {...register("email")}/>
             <p>{errors.email?.message}</p>
           
             <label>Senha</label>
             <S.ContainerPassword>
-                <input value="LIFEisGOOD@1" className={errors.password ? "msgErrorColor" : ""} 
+                <input className={errors.password ? "msgErrorColor" : ""} 
                 type={eye.type.name === "FaEye" ? "password" : "text"} 
                 placeholder="Digite aqui sua senha" {...register("password")}/>
               

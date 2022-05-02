@@ -66,7 +66,7 @@ function ModalEditTech({techTitle, id ,showModalEdit, setShowModalEdit}) {
             <S.Body>
                 <form onSubmit={handleSubmit(editTechInfo)}>
                     <label>Nome do projeto</label>
-                    <input placeholder={techTitle} {...register("title")}/>
+                    <input placeholder={techTitle} disabled {...register("title")}/>
 
                     <label>Status</label>
                     <select {...register("status")}>
